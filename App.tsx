@@ -7,6 +7,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { MealsOverviewScreen } from './src/screens/MealsOverviewScreen';
 import { ICategory } from './src/models/interfaces/Icategory';
 import { RootStackParamList } from './src/models/types/RootStackParamList';
+import { MealDetailScreen } from './src/screens/MealDetailScreen';
 
 
 const Stack = createStackNavigator<RootStackParamList>()
@@ -15,17 +16,42 @@ export default function App() {
   return (
     <>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName='MealsCategories'>
+        <Stack.Navigator
+          initialRouteName='MealsCategories'
+          screenOptions={{
+            headerStyle: {
+              backgroundColor: '#351401'
+            },
+            headerTintColor: 'white',
+            cardStyle: {
+              backgroundColor: '#3f2f25'
+            }
+          }}
+        >
           <Stack.Screen
             name="MealsCategories"
             component={CategoriesScreen}
+            options={{
+              title: 'All Categories',
+              
+            }}
           />
           <Stack.Screen
             name="MealsOverview"
             component={MealsOverviewScreen}
+            /* options={({route, navigation}) => {
+              const catId = route.params.categoryId
+              return {
+                title: catId
+              }
+            }} */
+          />
+          <Stack.Screen
+            name="MealDetail"
+            component={MealDetailScreen}
           />
         </Stack.Navigator>
-        <StatusBar style='dark'/> 
+        <StatusBar style='light'/> 
       </NavigationContainer>
       
     </>
