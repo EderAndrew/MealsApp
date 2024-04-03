@@ -2,15 +2,17 @@ import { Pressable, View, Text, StyleSheet, Platform } from "react-native"
 
 type Props = {
     title: string
-    color: string
+    color: string,
+    onPress: () => void
 }
 
-export const CategoryCridTile = ({ title, color }:Props) => {
+export const CategoryCridTile = ({ title, color, onPress }:Props) => {
     return (
         <View style={styles.gridItem}>
             <Pressable
                 style={({ pressed })=>[styles.button, pressed ? styles.buttonPressed : null]}
                 android_ripple={{color: '#ccc'}}
+                onPress={onPress}
             >
                 <View style={[styles.innerContainer, {backgroundColor: color}]}>
                     <Text style={styles.title}>{title}</Text>
