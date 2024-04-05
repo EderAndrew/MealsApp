@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, Text, View } from 'react-native';
 import { CategoriesScreen } from './src/screens/CategoriesScreen';
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
@@ -8,6 +8,7 @@ import { MealsOverviewScreen } from './src/screens/MealsOverviewScreen';
 import { ICategory } from './src/models/interfaces/Icategory';
 import { RootStackParamList } from './src/models/types/RootStackParamList';
 import { MealDetailScreen } from './src/screens/MealDetailScreen';
+import { DrawerScreen } from './src/screens/DrawerScreen';
 
 
 const Stack = createStackNavigator<RootStackParamList>()
@@ -17,7 +18,7 @@ export default function App() {
     <>
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName='MealsCategories'
+          initialRouteName='Drawer'
           screenOptions={{
             headerStyle: {
               backgroundColor: '#351401'
@@ -29,11 +30,10 @@ export default function App() {
           }}
         >
           <Stack.Screen
-            name="MealsCategories"
-            component={CategoriesScreen}
+            name="Drawer"
+            component={DrawerScreen}
             options={{
-              title: 'All Categories',
-              
+              headerShown: false
             }}
           />
           <Stack.Screen
@@ -49,6 +49,9 @@ export default function App() {
           <Stack.Screen
             name="MealDetail"
             component={MealDetailScreen}
+            options={{
+              title: 'About the Meal'
+            }}
           />
         </Stack.Navigator>
         <StatusBar style='light'/> 

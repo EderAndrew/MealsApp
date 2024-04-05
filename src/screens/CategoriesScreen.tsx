@@ -2,10 +2,11 @@ import { Text, FlatList } from 'react-native'
 import { CATEGORIES } from '../../data/dummy-data'
 import { CategoryCridTile } from '../components/CategoryGridTile'
 import { ICategory } from '../models/interfaces/Icategory'
-import { StackScreenProps } from '@react-navigation/stack'
 import { RootStackParamList } from '../models/types/RootStackParamList'
+import { DrawerScreenProps } from '@react-navigation/drawer'
+import { RootDrawerParamList } from '../models/types/RootDrawerParamList'
 
-type Props = StackScreenProps<RootStackParamList>
+type Props = DrawerScreenProps<RootDrawerParamList>
 
 export const CategoriesScreen = ({navigation}:Props) => {
     const renderCategoryItem = (itemData: ICategory) => {

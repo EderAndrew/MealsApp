@@ -1,9 +1,17 @@
-import { StackScreenProps } from '@react-navigation/stack'
-import { Text, View, Image, StyleSheet } from 'react-native'
-import { RootStackParamList } from '../models/types/RootStackParamList'
+
+import { Text, View, Image, StyleSheet, Button } from 'react-native'
+
 import { MEALS } from '../../data/dummy-data'
 import { IMeal } from '../models/interfaces/Imeal'
 import { MealDetails } from '../components/MealDetails'
+import { Subtitle } from '../components/MealDetail/Subtitle'
+import { List } from '../components/MealDetail/List'
+import { ScrollView } from 'react-native-gesture-handler'
+import { useLayoutEffect } from 'react'
+import { IconButton } from '../components/IconButton'
+import { StackScreenProps } from '@react-navigation/stack'
+import { RootStackParamList } from '../models/types/RootStackParamList'
+
 
 type Props = StackScreenProps<RootStackParamList, 'MealDetail'>
 
@@ -12,8 +20,20 @@ export const MealDetailScreen = ({route, navigation}:Props) => {
 
     const selectedMeal:IMeal = MEALS.find(meal => meal.id === mealId) as IMeal
 
+    const headerButtonPressHandler = () => {
+        console.log('Pressed')
+    }
+
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            headerRight: () => {
+                return <IconButton icon="star" color="white" onPress={headerButtonPressHandler} />
+            }
+        })
+    }, [navigation, headerButtonPressHandler])
+
     return (
-        <View>
+        <ScrollView style={styles.rootContainer}>
             <Image
                 source={{uri: selectedMeal.imageUrl}}
                 style={styles.image}
@@ -23,24 +43,23 @@ export const MealDetailScreen = ({route, navigation}:Props) => {
                 meal={selectedMeal}
                 textStyle={styles.detailText}
             />
-            <View style={styles.subtitleContainer}>
-                <Text style={styles.subTitle}>Ingredients</Text>
-            </View>
-            {selectedMeal.ingredients.map(ingredient => (
-                <Text key={ingredient}>{ingredient}</Text>
-            ))}
+           <View style={styles.listOutContainer}>
+            <View style={styles.listContainer}>
+                <Subtitle>Ingredients</Subtitle>
+                <List data={selectedMeal.ingredients} />
 
-            <View style={styles.subtitleContainer}>
-                <Text style={styles.subTitle}>Steps</Text>
+                <Subtitle>Steps</Subtitle>
+                <List data={selectedMeal.steps} />
             </View>
-            {selectedMeal.steps.map(step => (
-                <Text key={step}>{step}</Text>
-            ))}
-        </View>
+           </View>
+        </ScrollView>
     )
 }
 
 const styles = StyleSheet.create({
+    rootContainer:{
+        marginBottom: 32
+    },
     image:{
         width: '100%',
         height: 350
@@ -55,18 +74,10 @@ const styles = StyleSheet.create({
     detailText:{
         color: 'white'
     },
-    subTitle:{
-        color:'#e2b497',
-        fontSize: 18,
-        fontWeight: 'bold',
-        textAlign: 'center',
+    listOutContainer: {
+        alignItems: 'center',
     },
-    subtitleContainer:{
-        margin: 4,
-        padding: 6,
-        marginHorizontal: 24,
-        marginVertical: 4,
-        borderBottomColor: '#e2b497',
-        borderBottomWidth: 2
-    }
+    listContainer: {
+        width: '80%',
+    },
 })
