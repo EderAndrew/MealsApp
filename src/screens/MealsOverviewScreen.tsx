@@ -6,6 +6,7 @@ import { FlatList } from 'react-native-gesture-handler'
 import { MealItem } from '../components/MealItem'
 import { IMeal } from '../models/interfaces/Imeal'
 import { useLayoutEffect } from 'react'
+import { MealsList } from '../components/MealsList/MealList'
 
 type Props = StackScreenProps<RootStackParamList, 'MealsOverview'>
 
@@ -19,24 +20,5 @@ export const MealsOverviewScreen = ({route, navigation}:Props) => {
         navigation.setOptions({title: categoryTitle})
     }, [catId, navigation])
 
-    const renderMealItem = (itemData:IMeal) => {
-        return <MealItem meal={itemData}/>
-    }
-
-    return(
-        <View style={style.container}>
-            <FlatList
-                data={displayedMeals}
-                keyExtractor={(item) => item.id}
-                renderItem={({item}) => renderMealItem(item)}
-            />
-        </View>
-    )
+    return <MealsList item={displayedMeals} />
 }
-
-const style = StyleSheet.create({
-    container:{
-        flex: 1,
-        padding: 16
-    }
-})
